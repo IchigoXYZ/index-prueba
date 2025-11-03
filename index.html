@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Biblioteca</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        /* Menú lateral */
+        .sidebar {
+            width: 250px;
+            background-color: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+
+        .menu-section {
+            margin-bottom: 10px;
+        }
+
+        .menu-section h3 {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #34495e;
+            font-weight: 500;
+        }
+
+        .menu-item:hover {
+            background-color: #f0f4f8;
+            color: #3498db;
+        }
+
+        .menu-item.active {
+            background-color: #e8f4fe;
+            color: #3498db;
+            border-left: 3px solid #3498db;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .submenu {
+            padding-left: 40px;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2c3e50;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        /* Tarjetas de contenido */
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .card p {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .highlight-card {
+            background-color: #e8f4fe;
+            border-left: 4px solid #3498db;
+        }
+
+        .highlight-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .highlight-card p {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        /* Carousel de tarjetas */
+        .carousel-container {
+            position: relative;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 20px;
+        }
+
+        .carousel-card {
+            min-width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .carousel-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .carousel-card-content {
+            padding: 20px;
+        }
+
+        .carousel-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .carousel-card p {
+            color: #7f8c8d;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .carousel-card .btn {
+            background-color: transparent;
+            color: #3498db;
+            border: 1px solid #3498db;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .carousel-card .btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-dot.active {
+            background-color: #3498db;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            font-size: 18px;
+            color: #3498db;
+        }
+
+        .carousel-arrow.left {
+            left: 10px;
+        }
+
+        .carousel-arrow.right {
+            right: 10px;
+        }
+
+        /* Sección de seguir explorando */
+        .explore-section {
+            margin-top: 40px;
+        }
+
+        .explore-section h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .explore-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .explore-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .explore-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .explore-card h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .explore-card p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+            
+            .menu-section h3, .menu-item span {
+                display: none;
+            }
+            
+            .menu-item {
+                justify-content: center;
+                padding: 15px 0;
+            }
+            
+            .menu-item i {
+                margin-right: 0;
+                font-size: 20px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+                padding: 15px;
+            }
+            
+            .carousel-card {
+                min-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Menú lateral -->
+    <div class="sidebar">
+        <div class="logo">
+            <h1># Introduces</h1>
+        </div>
+        
+        <div class="menu-section">
+            <h3>Informe</h3>
+            <div class="menu-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Principal</span>
+            </div>
+            <div class="submenu">
+                <div class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendario</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <h3>Universidad</h3>
+            <div class="menu-item">
+                <i class="fas fa-book"></i>
+                <span>Cursos</span>
+            </div>
+            <div class="menu-item active">
+                <i class="fas fa-book-open"></i>
+                <span>Biblioteca</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-certificate"></i>
+                <span>Certificaciones</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-microphone"></i>
+                <span>Conferencias</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Master Clases</span>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <h3>Centro de negocios</h3>
+            <div class="menu-item">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Buy and Sell</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-tools"></i>
+                <span>Construye un negocio</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Crece tu negocio</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-users"></i>
+                <span>Profesionales</span>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <h3>Herramientas</h3>
+            <div class="menu-item">
+                <i class="fas fa-address-book"></i>
+                <span>CRM</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-cogs"></i>
+                <span>Automations</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-calculator"></i>
+                <span>Calculadoras</span>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h3>Conviértete en socio</h3>
+            <div class="menu-item">
+                <i class="fas fa-handshake"></i>
+                <span>Afiliados</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-award"></i>
+                <span>Patrocinador</span>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h3>Comunidad</h3>
+            <div class="menu-item">
+                <i class="fas fa-lightbulb"></i>
+                <span>Ideas (Muro de Sugerencias)</span>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h3>Soporte</h3>
+            <div class="menu-item">
+                <i class="fas fa-headset"></i>
+                <span>Soporte</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Biblioteca</h1>
+            <div class="user-info">
+                <div class="user-avatar">U</div>
+                <span>Usuario</span>
+            </div>
+        </div>
+        
+        <!-- Carousel de tarjetas -->
+        <div class="carousel-container">
+            <button class="carousel-arrow left"><i class="fas fa-chevron-left"></i></button>
+            <div class="carousel">
+                <div class="carousel-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Chat GPT">
+                    <div class="carousel-card-content">
+                        <h3>Conviértete en un experto en Chat GPT</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur elit. Sed do eiusmod tempor incididunt.</p>
+                        <button class="btn">Ver</button>
+                    </div>
+                </div>
+                <div class="carousel-card">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Psicología del dinero">
+                    <div class="carousel-card-content">
+                        <h3>Psicología del dinero en los negocios</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur elit. Sed do eiusmod tempor incididunt.</p>
+                        <button class="btn">Ver</button>
+                    </div>
+                </div>
+                <div class="carousel-card">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Marketing Digital">
+                    <div class="carousel-card-content">
+                        <h3>Estrategias de Marketing Digital</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur elit. Sed do eiusmod tempor incididunt.</p>
+                        <button class="btn">Ver</button>
+                    </div>
+                </div>
+                <div class="carousel-card">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Liderazgo">
+                    <div class="carousel-card-content">
+                        <h3>Liderazgo en la Era Digital</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur elit. Sed do eiusmod tempor incididunt.</p>
+                        <button class="btn">Ver</button>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-arrow right"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-nav">
+                <div class="carousel-dot active"></div>
+                <div class="carousel-dot"></div>
+                <div class="carousel-dot"></div>
+                <div class="carousel-dot"></div>
+            </div>
+        </div>
+        
+        <!-- Sección de seguir explorando -->
+        <div class="explore-section">
+            <h2>Seguir explorando</h2>
+            <div class="explore-cards">
+                <div class="explore-card">
+                    <h3>Certificaciones</h3>
+                    <p>Obtén certificaciones reconocidas en tu área de interés.</p>
+                </div>
+                <div class="explore-card">
+                    <h3>Conferencias</h3>
+                    <p>Participa en conferencias con expertos de la industria.</p>
+                </div>
+                <div class="explore-card">
+                    <h3>Master Clases</h3>
+                    <p>Aprende de los mejores con nuestras master classes exclusivas.</p>
+                </div>
+                <div class="explore-card">
+                    <h3>Recursos Premium</h3>
+                    <p>Accede a recursos exclusivos para miembros premium.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para la interacción del menú
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remover la clase active de todos los elementos
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Agregar la clase active al elemento clickeado
+                    this.classList.add('active');
+                    
+                    // Si es un elemento padre, alternar la visibilidad del submenú
+                    if (this.nextElementSibling && this.nextElementSibling.classList.contains('submenu')) {
+                        this.nextElementSibling.style.display = 
+                            this.nextElementSibling.style.display === 'none' ? 'block' : 'none';
+                    }
+                });
+            });
+
+            // JavaScript para el carousel
+            const carousel = document.querySelector('.carousel');
+            const cards = document.querySelectorAll('.carousel-card');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const prevBtn = document.querySelector('.carousel-arrow.left');
+            const nextBtn = document.querySelector('.carousel-arrow.right');
+            
+            let currentIndex = 0;
+            const cardWidth = 300 + 20; // Ancho de la tarjeta + gap
+            
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                
+                // Actualizar dots activos
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            // Event listeners para los botones de navegación
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < cards.length - 1) {
+                    currentIndex++;
+                    updateCarousel();
+                }
+            });
+            
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateCarousel();
+                }
+            });
+            
+            // Event listeners para los dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+            
+            // Auto-avance del carousel
+            setInterval(() => {
+                if (currentIndex < cards.length - 1) {
+                    currentIndex++;
+                } else {
+                    currentIndex = 0;
+                }
+                updateCarousel();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
