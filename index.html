@@ -381,8 +381,8 @@
       }
 
       .new-carousel-card {
-        min-width: 280px;
-        background: white;
+        max-width: 370px;
+        background: #f5f5f5;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         overflow: hidden;
@@ -413,18 +413,18 @@
       }
 
       .new-carousel-card p {
-        color: #7f8c8d;
+        color: #000000;
         font-size: 14px;
         line-height: 1.5;
         margin-bottom: 15px;
       }
 
       .new-carousel-card .btn {
-        background-color: #3498db;
+        background-color: #025ecd;
         color: white;
         border: none;
-        padding: 8px 20px;
-        border-radius: 20px;
+        padding: 10px 48px;
+        border-radius: 10px;
         font-size: 14px;
         font-weight: 500;
         cursor: pointer;
@@ -440,12 +440,6 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-      }
-
-      .new-carousel-header h2 {
-        font-size: 22px;
-        color: #2c3e50;
-        font-weight: 600;
       }
 
       .new-carousel-nav {
@@ -584,7 +578,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
       }
 
       .search-box {
@@ -631,7 +624,7 @@
 
       .filter-tag {
         background-color: #f5f7fa;
-        border: 1px solid #e0e0e0;
+        border: 1px solid black;
         border-radius: 10px;
         padding: 5px 15px;
         font-size: 14px;
@@ -658,7 +651,7 @@
 
       .filter-action {
         background-color: #f5f7fa;
-        border: 1px solid #e0e0e0;
+        border: 1px solid black;
         border-radius: 20px;
         padding: 8px 15px;
         font-size: 14px;
@@ -676,11 +669,16 @@
         background-color: transparent;
         border: 1px solid #e74c3c;
         color: #e74c3c;
+        display: none; /* Oculto inicialmente */
       }
 
       .filter-action.clear:hover {
         background-color: #e74c3c;
         color: white;
+      }
+
+      .filter-action.clear.visible {
+        display: block; /* Mostrar cuando haya filtros activos */
       }
 
       .cards-section {
@@ -690,6 +688,87 @@
         margin-top: 20px;
       }
 
+      .filter-selector {
+        position: relative;
+        display: inline-block;
+      }
+
+      .filter-selector-btn {
+        background-color: #f5f7fa;
+        border: 1px solid black;
+        border-radius: 10px;
+        padding: 5px 15px;
+        font-size: 14px;
+        color: #2c3e50;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .filter-selector-btn:hover {
+        background-color: #e8f4fe;
+        border-color: #3498db;
+      }
+
+      .filter-options {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        z-index: 1000;
+        min-width: 200px;
+        display: none;
+        margin-top: 5px;
+      }
+
+      .filter-options.active {
+        display: block;
+      }
+
+      .filter-option {
+        padding: 8px 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+      }
+
+      .filter-option:hover {
+        background-color: #f5f7fa;
+      }
+
+      .active-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+        align-items: center;
+      }
+
+      .active-filter {
+        background-color: #3498db;
+        color: white;
+        border-radius: 15px;
+        padding: 5px 12px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .active-filter .remove-filter {
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .active-filter .remove-filter:hover {
+        color: #ffcccc;
+      }
       /* Responsive */
       @media (min-width: 769px) {
         .inicio-section {
@@ -1027,32 +1106,79 @@
           <div class="filters-container">
             <div class="filter-group">
               <div class="filter-tags">
-                <div class="filter-tag">Tages (3)</div>
-                <div class="filter-tag">Formato (2)</div>
-                <div class="filter-tag">Nicho (2)</div>
+                <!-- Cambiamos los tags por selectores desplegables -->
+                <div class="filter-selector">
+                  <div class="filter-selector-btn" data-filter-type="tags">
+                    Tags <i class="fas fa-chevron-down"></i>
+                  </div>
+                  <div class="filter-options" data-filter-type="tags">
+                    <div class="filter-option" data-value="tecnologia">
+                      Tecnología
+                    </div>
+                    <div class="filter-option" data-value="ia">
+                      Inteligencia Artificial
+                    </div>
+                    <div class="filter-option" data-value="marketing">
+                      Marketing
+                    </div>
+                    <div class="filter-option" data-value="finanzas">
+                      Finanzas
+                    </div>
+                    <div class="filter-option" data-value="liderazgo">
+                      Liderazgo
+                    </div>
+                  </div>
+                </div>
+
+                <div class="filter-selector">
+                  <div class="filter-selector-btn" data-filter-type="formato">
+                    Formato <i class="fas fa-chevron-down"></i>
+                  </div>
+                  <div class="filter-options" data-filter-type="formato">
+                    <div class="filter-option" data-value="video">Video</div>
+                    <div class="filter-option" data-value="audio">Audio</div>
+                    <div class="filter-option" data-value="pdf">PDF</div>
+                    <div class="filter-option" data-value="curso">Curso</div>
+                  </div>
+                </div>
+
+                <div class="filter-selector">
+                  <div class="filter-selector-btn" data-filter-type="nicho">
+                    Nicho <i class="fas fa-chevron-down"></i>
+                  </div>
+                  <div class="filter-options" data-filter-type="nicho">
+                    <div class="filter-option" data-value="negocios">
+                      Negocios
+                    </div>
+                    <div class="filter-option" data-value="emprendedores">
+                      Emprendedores
+                    </div>
+                    <div class="filter-option" data-value="profesionales">
+                      Profesionales
+                    </div>
+                    <div class="filter-option" data-value="estudiantes">
+                      Estudiantes
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="search-box">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Buscar" />
+            <input type="text" id="search-input" placeholder="Buscar" />
           </div>
         </div>
-
-        <div class="filter-actions">
-          <div class="filter-action"><i class="fas fa-file"></i> Filtro X</div>
-          <div class="filter-action"><i class="fas fa-file"></i> Filtro X</div>
-          <div class="filter-action"><i class="fas fa-file"></i> Filtro X</div>
-          <div class="filter-action"><i class="fas fa-file"></i> Filtro X</div>
-          <div class="filter-action"><i class="fas fa-file"></i> Filtro X</div>
-          <div class="filter-action"><i class="fas fa-file"></i> Filtro X</div>
-          <div class="filter-action clear">Limpiar todos</div>
+        <!-- Área para mostrar filtros activos -->
+        <div class="active-filters" id="active-filters">
+          <!-- Los filtros activos aparecerán aquí dinámicamente -->
         </div>
       </div>
 
       <!-- Nuevo Carousel - Estilo de la imagen -->
       <div class="carousel-container">
         <div class="new-carousel-header">
+          <h2>Recursos destacados</h2>
           <div class="new-carousel-nav">
             <button class="new-carousel-prev">
               <i class="fas fa-chevron-left"></i>
@@ -1063,8 +1189,12 @@
           </div>
         </div>
 
-        <div class="new-carousel">
-          <div class="new-carousel-card">
+        <div class="new-carousel" id="carousel-container">
+          <div
+            class="new-carousel-card"
+            data-tags="tecnologia ia"
+            data-title="Conviértete en un experto en Chat GPT"
+          >
             <img
               src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
               alt="Chat GPT"
@@ -1075,10 +1205,14 @@
                 Lorem ipsum dolor sit amet, consectetur elit. Sed do eiusmod
                 tempor incididunt.
               </p>
-              <button class="btn">Ver más</button>
+              <button class="btn">Ver</button>
             </div>
           </div>
-          <div class="new-carousel-card">
+          <div
+            class="new-carousel-card"
+            data-tags="negocios finanzas psicologia"
+            data-title="Psicología del dinero en los negocios"
+          >
             <img
               src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
               alt="Psicología del dinero"
@@ -1089,10 +1223,14 @@
                 Lorem ipsum dolor sit amet, consectetur elit. Sed do eiusmod
                 tempor incididunt.
               </p>
-              <button class="btn">Ver más</button>
+              <button class="btn">Ver</button>
             </div>
           </div>
-          <div class="new-carousel-card">
+          <div
+            class="new-carousel-card"
+            data-tags="marketing digital"
+            data-title="Estrategias de Marketing Digital"
+          >
             <img
               src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
               alt="Marketing Digital"
@@ -1103,10 +1241,14 @@
                 Lorem ipsum dolor sit amet, consectetur elit. Sed do eiusmod
                 tempor incididunt.
               </p>
-              <button class="btn">Ver más</button>
+              <button class="btn">Ver</button>
             </div>
           </div>
-          <div class="new-carousel-card">
+          <div
+            class="new-carousel-card"
+            data-tags="liderazgo digital"
+            data-title="Liderazgo en la Era Digital"
+          >
             <img
               src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
               alt="Liderazgo"
@@ -1117,10 +1259,14 @@
                 Lorem ipsum dolor sit amet, consectetur elit. Sed do eiusmod
                 tempor incididunt.
               </p>
-              <button class="btn">Ver más</button>
+              <button class="btn">Ver</button>
             </div>
           </div>
-          <div class="new-carousel-card">
+          <div
+            class="new-carousel-card"
+            data-tags="finanzas emprendedores"
+            data-title="Gestión Financiera para Emprendedores"
+          >
             <img
               src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
               alt="Finanzas"
@@ -1131,7 +1277,7 @@
                 Lorem ipsum dolor sit amet, consectetur elit. Sed do eiusmod
                 tempor incididunt.
               </p>
-              <button class="btn">Ver más</button>
+              <button class="btn">Ver</button>
             </div>
           </div>
         </div>
@@ -1276,30 +1422,249 @@
         // Auto-avance del carousel de inicio cada 5 segundos
         setInterval(nextInicioSlide, 5000);
 
-        // JavaScript para los filtros
-        const filterTags = document.querySelectorAll(".filter-tag");
-        const filterActions = document.querySelectorAll(
-          ".filter-action:not(.clear)"
-        );
-        const clearFilterBtn = document.querySelector(".filter-action.clear");
+        // ========== NUEVO CÓDIGO PARA LOS FILTROS ==========
 
-        // Activar/desactivar filtros
-        filterTags.forEach((tag) => {
-          tag.addEventListener("click", () => {
-            tag.classList.toggle("active");
+        // Variables para almacenar los filtros activos
+        let activeFilters = {
+          tags: [],
+          formato: [],
+          nicho: [],
+          tipo: [],
+        };
+
+        // Elementos del DOM para los filtros
+        const filterSelectorBtns = document.querySelectorAll(
+          ".filter-selector-btn"
+        );
+        const filterOptions = document.querySelectorAll(".filter-options");
+        const activeFiltersContainer =
+          document.getElementById("active-filters");
+        const clearFilterBtn = document.querySelector(".filter-action.clear");
+        const searchInput = document.getElementById("search-input");
+        const carouselCards = document.querySelectorAll(".new-carousel-card");
+        const carouselContainer = document.getElementById("carousel-container");
+
+        // Almacenar las tarjetas originales para restaurar después de filtrar
+        const originalCards = Array.from(carouselCards);
+
+        // Mostrar/ocultar opciones de filtro al hacer clic en el botón
+        filterSelectorBtns.forEach((btn) => {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const filterType = this.dataset.filterType;
+
+            // Cerrar todos los demás selectores
+            filterOptions.forEach((option) => {
+              if (option.dataset.filterType !== filterType) {
+                option.classList.remove("active");
+              }
+            });
+
+            // Alternar el selector actual
+            const options = document.querySelector(
+              `.filter-options[data-filter-type="${filterType}"]`
+            );
+            options.classList.toggle("active");
           });
         });
 
-        filterActions.forEach((action) => {
-          action.addEventListener("click", () => {
-            action.classList.toggle("active");
+        // Cerrar selectores al hacer clic fuera de ellos
+        document.addEventListener("click", function () {
+          filterOptions.forEach((option) => {
+            option.classList.remove("active");
+          });
+        });
+
+        // Manejar la selección de opciones de filtro
+        document.querySelectorAll(".filter-option").forEach((option) => {
+          option.addEventListener("click", function () {
+            const filterType = this.parentElement.dataset.filterType;
+            const filterValue = this.dataset.value;
+            const filterLabel = this.textContent;
+
+            // Verificar si el filtro ya está activo
+            const isAlreadyActive = activeFilters[filterType].some(
+              (filter) => filter.value === filterValue
+            );
+
+            if (!isAlreadyActive) {
+              // Agregar el filtro
+              activeFilters[filterType].push({
+                value: filterValue,
+                label: filterLabel,
+              });
+
+              // Actualizar la interfaz
+              updateActiveFiltersDisplay();
+              filterCards();
+            }
+
+            // Cerrar el selector
+            this.parentElement.classList.remove("active");
           });
         });
 
         // Limpiar todos los filtros
-        clearFilterBtn.addEventListener("click", () => {
-          filterTags.forEach((tag) => tag.classList.remove("active"));
-          filterActions.forEach((action) => action.classList.remove("active"));
+        clearFilterBtn.addEventListener("click", function () {
+          // Limpiar todos los filtros
+          activeFilters = {
+            tags: [],
+            formato: [],
+            nicho: [],
+            tipo: [],
+          };
+
+          // Limpiar la interfaz
+          updateActiveFiltersDisplay();
+          searchInput.value = "";
+          filterCards();
+        });
+
+        // Filtrar por búsqueda
+        searchInput.addEventListener("input", filterCards);
+
+        // Función para actualizar la visualización de filtros activos
+        function updateActiveFiltersDisplay() {
+          // Limpiar el contenedor
+          activeFiltersContainer.innerHTML = "";
+
+          // Contador de filtros activos
+          let totalActiveFilters = 0;
+
+          // Recorrer todos los tipos de filtros
+          Object.keys(activeFilters).forEach((filterType) => {
+            activeFilters[filterType].forEach((filter) => {
+              totalActiveFilters++;
+              const filterElement = document.createElement("div");
+              filterElement.className = "active-filter";
+              filterElement.innerHTML = `
+                ${filter.label}
+                <span class="remove-filter" data-type="${filterType}" data-value="${filter.value}">
+                  <i class="fas fa-times"></i>
+                </span>
+              `;
+              activeFiltersContainer.appendChild(filterElement);
+            });
+          });
+
+          // Mostrar u ocultar el botón "Limpiar todos" según si hay filtros activos
+          if (totalActiveFilters > 0) {
+            // Crear botón "Limpiar todos" si no existe
+            if (!document.querySelector(".filter-action.clear.visible")) {
+              const clearAllBtn = document.createElement("div");
+              clearAllBtn.className = "filter-action clear visible";
+              clearAllBtn.textContent = "Limpiar todos";
+              clearAllBtn.addEventListener("click", function () {
+                // Limpiar todos los filtros
+                activeFilters = {
+                  tags: [],
+                  formato: [],
+                  nicho: [],
+                  tipo: [],
+                };
+
+                // Limpiar la interfaz
+                updateActiveFiltersDisplay();
+                searchInput.value = "";
+                filterCards();
+              });
+              activeFiltersContainer.appendChild(clearAllBtn);
+            }
+          } else {
+            // Ocultar el botón "Limpiar todos" si no hay filtros activos
+            const clearBtn = document.querySelector(".filter-action.clear.visible");
+            if (clearBtn) {
+              clearBtn.remove();
+            }
+          }
+
+          // Agregar event listeners para eliminar filtros individuales
+          document.querySelectorAll(".remove-filter").forEach((removeBtn) => {
+            removeBtn.addEventListener("click", function () {
+              const filterType = this.dataset.type;
+              const filterValue = this.dataset.value;
+
+              // Remover el filtro
+              activeFilters[filterType] = activeFilters[filterType].filter(
+                (filter) => filter.value !== filterValue
+              );
+
+              // Actualizar la interfaz
+              updateActiveFiltersDisplay();
+              filterCards();
+            });
+          });
+        }
+
+        // Función para filtrar las tarjetas
+        function filterCards() {
+          const searchTerm = searchInput.value.toLowerCase();
+
+          // Limpiar el carrusel
+          carouselContainer.innerHTML = "";
+
+          // Filtrar y mostrar las tarjetas
+          originalCards.forEach((card) => {
+            const cardTags = card.dataset.tags.toLowerCase().split(" ");
+            const cardTitle = card.dataset.title.toLowerCase();
+
+            // Verificar si coincide con los filtros de tags
+            const matchesTags =
+              activeFilters.tags.length === 0 ||
+              activeFilters.tags.some((filter) =>
+                cardTags.includes(filter.value.toLowerCase())
+              );
+
+            // Verificar si coincide con los filtros de formato
+            const matchesFormato =
+              activeFilters.formato.length === 0 ||
+              activeFilters.formato.some((filter) =>
+                cardTags.includes(filter.value.toLowerCase())
+              );
+
+            // Verificar si coincide con los filtros de nicho
+            const matchesNicho =
+              activeFilters.nicho.length === 0 ||
+              activeFilters.nicho.some((filter) =>
+                cardTags.includes(filter.value.toLowerCase())
+              );
+
+            // Verificar si coincide con los filtros de tipo
+            const matchesTipo = activeFilters.tipo.length === 0;
+
+            // Verificar si coincide con el término de búsqueda
+            const matchesSearch =
+              searchTerm === "" ||
+              cardTitle.includes(searchTerm) ||
+              cardTags.some((tag) => tag.includes(searchTerm));
+
+            // Si la tarjeta coincide con todos los criterios, mostrarla
+            if (
+              matchesTags &&
+              matchesFormato &&
+              matchesNicho &&
+              matchesTipo &&
+              matchesSearch
+            ) {
+              carouselContainer.appendChild(card.cloneNode(true));
+            }
+          });
+
+          // Restaurar los event listeners para los botones de las tarjetas
+          document
+            .querySelectorAll(".new-carousel-card .btn")
+            .forEach((btn) => {
+              btn.addEventListener("click", function () {
+                alert("Funcionalidad de 'Ver más' activada");
+              });
+            });
+        }
+
+        // Inicializar los event listeners para los botones de las tarjetas
+        document.querySelectorAll(".new-carousel-card .btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            alert("Funcionalidad de 'Ver más' activada");
+          });
         });
       });
     </script>
