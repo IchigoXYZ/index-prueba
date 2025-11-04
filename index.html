@@ -158,10 +158,10 @@
         background-color: #025ecd;
         color: white;
         border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
+        padding: 12px 50px;
+        font-size: 1rem;
+        border-radius: 8px;
         cursor: pointer;
-        font-weight: 500;
         transition: background-color 0.3s;
       }
 
@@ -171,10 +171,13 @@
 
       /* Sección de inicio (como en la imagen) */
       .inicio-section {
+        display: flex;
+        flex-direction: column;
         margin-bottom: 40px;
         background-color: #2b2c30;
         border-radius: 11px;
-        padding: 50px;
+        padding: 30px 20px;
+        text-align: center;
       }
 
       .inicio-section h1 {
@@ -184,17 +187,108 @@
       }
 
       .inicio-section h2 {
-        font-size: 22px;
+        font-size: 32px;
         color: #fffffd;
         margin-bottom: 15px;
         font-weight: 600;
+        line-height: 1.2;
       }
 
       .inicio-section p {
         color: #feffff;
-        line-height: 1.6;
+        line-height: 1.5;
         margin-bottom: 20px;
-        max-width: 800px;
+        max-width: 100%;
+        font-size: 16px;
+      }
+
+      .text-content {
+        flex: 1;
+        max-width: 100%;
+        font-size: 18px;
+        font-weight: 400;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .image-content {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+
+      /* Carousel para la imagen de inicio */
+      .inicio-carousel {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .carousel-images {
+        display: flex;
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        height: 250px;
+      }
+
+      .carousel-image {
+        min-width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .carousel-nav {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+        gap: 10px;
+      }
+
+      .carousel-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #ddd;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .carousel-dot.active {
+        background-color: #3498db;
+      }
+
+      .carousel-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(255, 255, 255, 0.8);
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        font-size: 16px;
+        color: #3498db;
+      }
+
+      .carousel-arrow.left {
+        left: 10px;
+      }
+
+      .carousel-arrow.right {
+        right: 10px;
       }
 
       .highlight-card {
@@ -270,110 +364,6 @@
       .carousel-card .btn:hover {
         background-color: #3498db;
         color: white;
-      }
-
-      .carousel-nav {
-        display: flex;
-        justify-content: center;
-        margin-top: 15px;
-        gap: 10px;
-      }
-
-      .carousel-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #ddd;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-
-      .carousel-dot.active {
-        background-color: #3498db;
-      }
-
-      .carousel-arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(255, 255, 255, 0.8);
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        z-index: 10;
-        font-size: 18px;
-        color: #3498db;
-      }
-
-      .carousel-arrow.left {
-        left: 10px;
-      }
-
-      .carousel-arrow.right {
-        right: 10px;
-      }
-
-      /* Sección de seguir explorando */
-      .explore-section {
-        margin-top: 40px;
-      }
-
-      .explore-section h2 {
-        font-size: 22px;
-        margin-bottom: 20px;
-        color: #2c3e50;
-      }
-
-      .explore-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-      }
-
-      .explore-card {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        padding: 20px;
-        transition: transform 0.3s;
-      }
-
-      .explore-card:hover {
-        transform: translateY(-5px);
-      }
-
-      .explore-card h3 {
-        font-size: 16px;
-        margin-bottom: 10px;
-        color: #2c3e50;
-      }
-
-      .explore-card p {
-        color: #7f8c8d;
-        font-size: 14px;
-      }
-
-      /* Botón de menú móvil */
-      .menu-toggle {
-        display: none;
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        background-color: #1e2a3a;
-        color: white;
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 4px;
-        font-size: 20px;
-        z-index: 1000;
-        cursor: pointer;
       }
 
       /* Nuevo estilo para el carrusel basado en la imagen */
@@ -482,7 +472,90 @@
         border-color: #3498db;
       }
 
+      /* Sección de seguir explorando */
+      .explore-section {
+        margin-top: 40px;
+      }
+
+      .explore-section h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        color: #2c3e50;
+      }
+
+      .explore-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .explore-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        transition: transform 0.3s;
+      }
+
+      .explore-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .explore-card h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #2c3e50;
+      }
+
+      .explore-card p {
+        color: #7f8c8d;
+        font-size: 14px;
+      }
+
+      /* Botón de menú móvil */
+      .menu-toggle {
+        display: none;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        background-color: #1e2a3a;
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        font-size: 20px;
+        z-index: 1000;
+        cursor: pointer;
+      }
+
       /* Responsive */
+      @media (min-width: 769px) {
+        .inicio-section {
+          flex-direction: row;
+          text-align: left;
+          padding: 50px;
+        }
+        
+        .text-content {
+          align-items: flex-start;
+          margin-bottom: 0;
+          margin-right: 30px;
+        }
+        
+        .inicio-section h2 {
+          font-size: 42px;
+        }
+        
+        .inicio-section p {
+          font-size: 20px;
+        }
+        
+        .carousel-images {
+          height: 300px;
+        }
+      }
+
       @media (max-width: 1024px) {
         .carousel-card,
         .new-carousel-card {
@@ -541,6 +614,15 @@
         .new-carousel-nav {
           align-self: flex-end;
         }
+        
+        .inicio-section h2 {
+          font-size: 28px;
+        }
+        
+        .btn {
+          padding: 10px 30px;
+          font-size: 0.9rem;
+        }
       }
 
       @media (max-width: 576px) {
@@ -555,6 +637,26 @@
 
         .carousel-arrow {
           display: none;
+        }
+        
+        .inicio-section {
+          padding: 20px 15px;
+        }
+        
+        .inicio-section h2 {
+          font-size: 24px;
+        }
+        
+        .inicio-section p {
+          font-size: 14px;
+        }
+        
+        .carousel-images {
+          height: 200px;
+        }
+        
+        .text-content {
+          font-size: 16px;
         }
       }
     </style>
@@ -698,11 +800,47 @@
 
       <!-- Sección de inicio (como en la imagen) -->
       <div class="inicio-section">
-        <h2>Lorem ipsum dolor sit amet consectetur</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-        <button class="btn">Ver más</button>
+        <div class="text-content">
+          <h2>Lorem ipsum dolor sit amet consectetur</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna.
+          </p>
+          <button class="btn">Ver más</button>
+        </div>
+        <div class="image-content">
+          <div class="inicio-carousel">
+            <div class="carousel-images">
+              <img
+                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+                alt="Imagen descriptiva 1"
+                class="carousel-image active"
+              />
+              <img
+                src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+                alt="Imagen descriptiva 2"
+                class="carousel-image"
+              />
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+                alt="Imagen descriptiva 3"
+                class="carousel-image"
+              />
+            </div>
+            <button class="carousel-arrow left">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-arrow right">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="carousel-nav">
+              <div class="carousel-dot active"></div>
+              <div class="carousel-dot"></div>
+              <div class="carousel-dot"></div>
+            </div>
+          </div>
+        </div>
       </div>
-
 
       <!-- Nuevo Carousel - Estilo de la imagen -->
       <div class="carousel-container">
@@ -879,6 +1017,49 @@
         newPrevBtn.addEventListener("click", () => {
           newCarousel.scrollBy({ left: -300, behavior: "smooth" });
         });
+
+        // JavaScript para el carousel de imágenes en la sección de inicio
+        const inicioCarouselImages = document.querySelectorAll('.carousel-image');
+        const inicioCarouselDots = document.querySelectorAll('.carousel-dot');
+        const inicioPrevBtn = document.querySelector('.inicio-carousel .carousel-arrow.left');
+        const inicioNextBtn = document.querySelector('.inicio-carousel .carousel-arrow.right');
+        let currentInicioSlide = 0;
+
+        function showInicioSlide(index) {
+          // Ocultar todas las imágenes
+          inicioCarouselImages.forEach(img => img.classList.remove('active'));
+          inicioCarouselDots.forEach(dot => dot.classList.remove('active'));
+          
+          // Mostrar la imagen actual
+          inicioCarouselImages[index].classList.add('active');
+          inicioCarouselDots[index].classList.add('active');
+          
+          currentInicioSlide = index;
+        }
+
+        function nextInicioSlide() {
+          let nextIndex = (currentInicioSlide + 1) % inicioCarouselImages.length;
+          showInicioSlide(nextIndex);
+        }
+
+        function prevInicioSlide() {
+          let prevIndex = (currentInicioSlide - 1 + inicioCarouselImages.length) % inicioCarouselImages.length;
+          showInicioSlide(prevIndex);
+        }
+
+        // Event listeners para los botones del carousel de inicio
+        inicioNextBtn.addEventListener('click', nextInicioSlide);
+        inicioPrevBtn.addEventListener('click', prevInicioSlide);
+
+        // Event listeners para los dots del carousel de inicio
+        inicioCarouselDots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            showInicioSlide(index);
+          });
+        });
+
+        // Auto-avance del carousel de inicio cada 5 segundos
+        setInterval(nextInicioSlide, 5000);
       });
     </script>
   </body>
