@@ -746,13 +746,14 @@
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-        margin-top: 15px;
+        margin-top: 1px;
         align-items: center;
       }
 
       .active-filter {
-        background-color: #3498db;
-        color: white;
+        background-color: white;
+        color: black;
+        border: 1px solid black;
         border-radius: 15px;
         padding: 5px 12px;
         font-size: 14px;
@@ -769,6 +770,39 @@
       .active-filter .remove-filter:hover {
         color: #ffcccc;
       }
+
+      .carousel-images {
+        position: relative;
+        height: 250px;
+        overflow: hidden;
+      }
+
+      .carousel-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .carousel-image.active {
+        transform: translateX(0);
+      }
+
+      .carousel-image.slide-out {
+        transform: translateX(-100%);
+      }
+
+      .carousel-image.slide-in {
+        transform: translateX(100%);
+      }
+
+      .carousel-image.slide-in.active {
+        transform: translateX(0);
+      }
+
       /* Responsive */
       @media (min-width: 769px) {
         .inicio-section {
@@ -1382,17 +1416,39 @@
           ".inicio-carousel .carousel-arrow.right"
         );
         let currentInicioSlide = 0;
+        let isTransitioning = false;
 
         function showInicioSlide(index) {
-          // Ocultar todas las imágenes
-          inicioCarouselImages.forEach((img) => img.classList.remove("active"));
-          inicioCarouselDots.forEach((dot) => dot.classList.remove("active"));
+          if (isTransitioning) return;
 
-          // Mostrar la imagen actual
-          inicioCarouselImages[index].classList.add("active");
+          isTransitioning = true;
+
+          const currentImage = inicioCarouselImages[currentInicioSlide];
+          const nextImage = inicioCarouselImages[index];
+
+          // Preparar la nueva imagen para entrar desde la derecha
+          nextImage.style.display = "block";
+          nextImage.classList.add("slide-in");
+
+          // Forzar reflow para que la animación funcione
+          void nextImage.offsetWidth;
+
+          // Animar: imagen actual sale a la izquierda, nueva imagen entra desde la derecha
+          currentImage.classList.add("slide-out");
+          nextImage.classList.add("active");
+
+          // Actualizar dots
+          inicioCarouselDots.forEach((dot) => dot.classList.remove("active"));
           inicioCarouselDots[index].classList.add("active");
 
-          currentInicioSlide = index;
+          // Limpiar clases después de la transición
+          setTimeout(() => {
+            currentImage.style.display = "none";
+            currentImage.classList.remove("active", "slide-out");
+            nextImage.classList.remove("slide-in");
+            currentInicioSlide = index;
+            isTransitioning = false;
+          }, 500);
         }
 
         function nextInicioSlide() {
@@ -1420,7 +1476,29 @@
         });
 
         // Auto-avance del carousel de inicio cada 5 segundos
-        setInterval(nextInicioSlide, 5000);
+        let carouselInterval = setInterval(nextInicioSlide, 5000);
+
+        // Pausar el auto-avance cuando el usuario interactúa con el carousel
+        function resetCarouselInterval() {
+          clearInterval(carouselInterval);
+          carouselInterval = setInterval(nextInicioSlide, 5000);
+        }
+
+        inicioNextBtn.addEventListener("click", resetCarouselInterval);
+        inicioPrevBtn.addEventListener("click", resetCarouselInterval);
+        inicioCarouselDots.forEach((dot) => {
+          dot.addEventListener("click", resetCarouselInterval);
+        });
+
+        // Inicializar mostrando la primera imagen
+        inicioCarouselImages.forEach((img, index) => {
+          if (index === 0) {
+            img.style.display = "block";
+            img.classList.add("active");
+          } else {
+            img.style.display = "none";
+          }
+        });
 
         // ========== NUEVO CÓDIGO PARA LOS FILTROS ==========
 
@@ -1505,20 +1583,22 @@
         });
 
         // Limpiar todos los filtros
-        clearFilterBtn.addEventListener("click", function () {
-          // Limpiar todos los filtros
-          activeFilters = {
-            tags: [],
-            formato: [],
-            nicho: [],
-            tipo: [],
-          };
+        if (clearFilterBtn) {
+          clearFilterBtn.addEventListener("click", function () {
+            // Limpiar todos los filtros
+            activeFilters = {
+              tags: [],
+              formato: [],
+              nicho: [],
+              tipo: [],
+            };
 
-          // Limpiar la interfaz
-          updateActiveFiltersDisplay();
-          searchInput.value = "";
-          filterCards();
-        });
+            // Limpiar la interfaz
+            updateActiveFiltersDisplay();
+            searchInput.value = "";
+            filterCards();
+          });
+        }
 
         // Filtrar por búsqueda
         searchInput.addEventListener("input", filterCards);
@@ -1538,11 +1618,11 @@
               const filterElement = document.createElement("div");
               filterElement.className = "active-filter";
               filterElement.innerHTML = `
-                ${filter.label}
-                <span class="remove-filter" data-type="${filterType}" data-value="${filter.value}">
-                  <i class="fas fa-times"></i>
-                </span>
-              `;
+            ${filter.label}
+            <span class="remove-filter" data-type="${filterType}" data-value="${filter.value}">
+              <i class="fas fa-times"></i>
+            </span>
+          `;
               activeFiltersContainer.appendChild(filterElement);
             });
           });
@@ -1572,7 +1652,9 @@
             }
           } else {
             // Ocultar el botón "Limpiar todos" si no hay filtros activos
-            const clearBtn = document.querySelector(".filter-action.clear.visible");
+            const clearBtn = document.querySelector(
+              ".filter-action.clear.visible"
+            );
             if (clearBtn) {
               clearBtn.remove();
             }
